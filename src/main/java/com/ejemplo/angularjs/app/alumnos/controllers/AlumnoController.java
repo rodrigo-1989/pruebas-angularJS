@@ -58,5 +58,9 @@ public class AlumnoController {
 		alumnoService.deleteById(id);
 	}
 	
-	
+	@GetMapping("/guardarAlumnos")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void guardarAlumnos() {
+		alumnoService.guardarAlumnos();
+	}
 }

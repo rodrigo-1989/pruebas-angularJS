@@ -58,6 +58,13 @@ public class Alumno implements Serializable{
 	}
 
 
+	@Override
+	public String toString() {
+		return "Alumno [C=" + codigo + ", N=" + nombre + ", T=" + telefono + ", D=" + direccion
+				+ "]";
+	}
+
+
 	/**
 	 * 
 	 */

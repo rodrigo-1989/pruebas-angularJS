@@ -13,5 +13,7 @@ public interface IAlumnoService {
 	public Alumno save(Alumno alumno);
 	
 	public void deleteById(Long id);
+	
+	public void guardarAlumnos();
 
 }
