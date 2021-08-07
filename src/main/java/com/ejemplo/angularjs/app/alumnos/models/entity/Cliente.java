@@ -30,6 +30,24 @@ public class Cliente implements Serializable{
 	private String pais;
 	
 	private String direccion;
+	
+	
+
+	public Cliente() {
+	}
+
+	public Cliente(Long id, String nombre, String correo, String zip, String telefono1, String telefono2, String pais,
+			String direccion) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.correo = correo;
+		this.zip = zip;
+		this.telefono1 = telefono1;
+		this.telefono2 = telefono2;
+		this.pais = pais;
+		this.direccion = direccion;
+	}
 
 	public Long getId() {
 		return id;

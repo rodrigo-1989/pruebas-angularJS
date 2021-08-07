@@ -1,5 +1,6 @@
 package com.ejemplo.angularjs.app.alumnos.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ejemplo.angularjs.app.alumnos.dto.AlumnoDto;
 import com.ejemplo.angularjs.app.alumnos.models.entity.Alumno;
 import com.ejemplo.angularjs.app.alumnos.service.IAlumnoService;
 
@@ -27,11 +29,22 @@ public class AlumnoController {
 	
 	@GetMapping("/listar")
 	public List<Alumno> listar(){
+		List<Alumno> alumno = alumnoService.findAll();
+		List<AlumnoDto> listaDto = new ArrayList<>();
+		
+		for(int i=0; i<alumno.size(); i++) {
+			AlumnoDto al = new AlumnoDto(alumno.get(i).getCodigo(),alumno.get(i).getNombre(),alumno.get(i).getTelefono(),alumno.get(i).getDireccion());
+			listaDto.add(al);
+		}
+		
 		return alumnoService.findAll();
 	}
 	
 	@GetMapping("/listar/{id}")
 	public Alumno ver(@PathVariable Long id){
+		Alumno alumno = alumnoService.findById(id);
+		AlumnoDto lista = new AlumnoDto(alumno.getCodigo(),alumno.getNombre(),alumno.getTelefono(),alumno.getDireccion());
+		
 		return alumnoService.findById(id);
 	}
 	
