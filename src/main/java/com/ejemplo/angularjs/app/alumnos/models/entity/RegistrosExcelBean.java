@@ -1,9 +1,20 @@
-package com.ejemplo.angularjs.app.alumnos.dto;
+package com.ejemplo.angularjs.app.alumnos.models.entity;
 
 import java.util.Date;
 
-public class RegistrosExcel {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "regisrtos_excel")
+public class RegistrosExcelBean {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String nombre;
@@ -11,19 +22,19 @@ public class RegistrosExcel {
 	private int edad;
 	
 	private String sexo;
-
+	
+	@Column(name ="fecha_inicio")
 	private Date fechaInicio;
 
-	public RegistrosExcel() {}
+	public RegistrosExcelBean() {}
 
-	public RegistrosExcel(Long id,String nombre, int edad, String sexo, Date fechaInicio) {
+	public RegistrosExcelBean(Long id,String nombre, int edad, String sexo, Date fechaInicio) {
 		this.id = id;
 		this.nombre = nombre;
 		this.edad = edad;
 		this.sexo = sexo;
 		this.fechaInicio = fechaInicio;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -67,8 +78,9 @@ public class RegistrosExcel {
 
 	@Override
 	public String toString() {
-		return "RegistrosExcel [id=" + id + ", nombre=" + nombre + ", edad=" + edad + ", sexo=" + sexo
+		return "RegistrosExcelBean [id=" + id + ", nombre=" + nombre + ", edad=" + edad + ", sexo=" + sexo
 				+ ", fechaInicio=" + fechaInicio + "]";
 	}
+
 	
 }
