@@ -1,5 +1,6 @@
 package com.ejemplo.angularjs.app.alumnos.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -41,32 +42,29 @@ public class ExcelServiceImpl implements IExcelService{
 	    RegistrosExcelBean registroBean = null;
 	    List<RegistrosExcel> lista = new ArrayList<>();
 		RegistrosExcel registro = null;
-		
-	    InputStream reader = null;
 	    Workbook lector = null;
 	    
 	    try {
-	    	File fileToUse  = convertFile(file);
-	    	reader = new FileInputStream(fileToUse);
-	    	lector = WorkbookFactory.create(reader);
+	    	lector = leeArchivo(file);
 	    	Sheet hojaActual = lector.getSheetAt(0);
 	    	Iterator<Row> iterator =  hojaActual.rowIterator();
 	    	Row fila= hojaActual.getRow(1);
 	    	
 	    	while(iterator.hasNext()) {
 	    		fila = iterator.next();
-	    		
 	    		if(fila.getRowNum()>0) {
 	    			registro = new RegistrosExcel();
 		    		registro.setNombre(hojaActual.getRow(fila.getRowNum()).getCell(0).getStringCellValue());
-					registro.setEdad((int)hojaActual.getRow(fila.getRowNum()).getCell(1).getNumericCellValue());
-					registro.setSexo(hojaActual.getRow(fila.getRowNum()).getCell(2).getStringCellValue());
-					registro.setFechaInicio(getDateFormat(getValidateDate(hojaActual.getRow(fila.getRowNum()).getCell(3).getStringCellValue())));
+		    		registro.setApellido(hojaActual.getRow(fila.getRowNum()).getCell(1).getStringCellValue());
+					registro.setEdad((int)hojaActual.getRow(fila.getRowNum()).getCell(2).getNumericCellValue());
+					registro.setSexo(hojaActual.getRow(fila.getRowNum()).getCell(3).getStringCellValue());
+					registro.setFechaInicio(getDateFormat(getValidateDate(hojaActual.getRow(fila.getRowNum()).getCell(4).getStringCellValue())));
 					lista.add( registro);
 					
 					registroBean = new RegistrosExcelBean(
 							registro.getId(),
 							registro.getNombre(),
+							registro.getApellido(),
 							registro.getEdad(),
 							registro.getSexo(),
 							registro.getFechaInicio()
@@ -159,13 +157,18 @@ public class ExcelServiceImpl implements IExcelService{
 		return registro;
 	}
 	
-	private File convertFile(MultipartFile file) throws IOException{
+//	private File convertFile(MultipartFile file) throws IOException{
+//		
+//		File getFile = new File(file.getOriginalFilename());
+//		FileOutputStream stream = new FileOutputStream(getFile);
+//		stream.write(file.getBytes());
+//		stream.close();
+//		return getFile;
+//	}
+	private Workbook leeArchivo(MultipartFile file) throws IOException {
+		InputStream input = new ByteArrayInputStream(file.getBytes());
+		return WorkbookFactory.create(input);
 		
-		File getFile = new File(file.getOriginalFilename());
-		FileOutputStream stream = new FileOutputStream(getFile);
-		stream.write(file.getBytes());
-		stream.close();
-		return getFile;
 	}
 
 }
